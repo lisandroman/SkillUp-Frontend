@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import  { useFormik } from 'formik'
 
 export const Register = () => {
-  // const [email, setEmail] = useState('')
-  // const [password, setPassword] = useState('')
   const initialValues = {
     email: '',
     password: ''
@@ -77,15 +75,3 @@ export const Register = () => {
     </div>
   )
 }
-
-
-// const user = {
-//   "userName": "federico",
-//   "password": "123456789",
-//   "email":"user@yahoo.com",
-//   "teamID": "9cdbd108-f924-4383-947d-8f06510dad",
-//   "role": "Team Leader", // => ["Team Member", "Team Leader"]
-//   "continent": "America", // => ["America", "Europa", "Otro"]
-//   "region": "Otro" // => ["Otro", "Latam", "Brasil", "America del Norte"]
-// }
-
