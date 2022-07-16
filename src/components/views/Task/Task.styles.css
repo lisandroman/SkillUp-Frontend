@@ -15,6 +15,25 @@
   margin: 0;
 }
 
+#tasks .wrapperList .groupList {
+  display: none;
+  flex-direction: row;
+  gap: 5px 10px
+}
+
+#tasks .wrapperList .groupList .list {
+  flex: 1;
+  border-radius: var(--global-border-radius);
+  padding: 10px;
+  box-shadow: 0 2px 5px #dbdbdb;
+  background-color: #fff;
+}
+
+#tasks .wrapperList .groupList .list h4{
+  font-size: 1.2rem;
+  margin: 0;
+}
+
 #tasks .card {
   background-color: #fff;
   border: var(--global-border);
@@ -53,11 +72,23 @@
   margin: 0.35rem 0.2rem 0.15rem 0;
   padding: 0.075rem 0.3rem;
   background-color: var(--global-primary-color);
+  border-color: var(--global-primary-color);
   color: #fff;
 }
 
 #tasks .card p {
   color: #424242;
   display: block;
+  font-size: 0.8rem;
+  margin: 0;
+  margin-top: 0.8rem;
 }
 
+@media (min-width: 768px) {
+  .phone {
+    display: none;
+  }
+  #tasks .wrapperList .groupList {
+    display: flex;
+  }
+}
