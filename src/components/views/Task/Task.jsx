@@ -1,22 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { Header } from '../../Header/Header'
+
 import './Task.styles.css'
+import { useResize } from '../../../hooks/useResize'
+import { Header } from '../../Header/Header'
+
 
 export const Task = () => {
 
-  const [isPhone, setIsPhone] = useState(window.innerWidth < 900 ? true : false)
+  const { isPhone } = useResize()
 
-  const handleResize = () => {
-    if(window.innerWidth < 900) setIsPhone(true);
-    else setIsPhone(false);
-  }
-
-  useEffect(() => {
-    handleResize()
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  })
-  
   const limitString = (str) => {
     if(str.length > 370)
       return {string: str.slice(0, 250).concat("..."), addButton: true}
