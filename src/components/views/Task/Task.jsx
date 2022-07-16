@@ -2,7 +2,8 @@
 import './Task.styles.css'
 import { useResize } from '../../../hooks/useResize'
 import { Header } from '../../Header/Header'
-
+import { cardsData } from './data'
+import { Card } from '../../Card/Card'
 
 export const Task = () => {
 
@@ -13,6 +14,12 @@ export const Task = () => {
       return {string: str.slice(0, 250).concat("..."), addButton: true}
     return {string: str, addButton: false}
   } 
+
+  const renderAllCards = () => {
+    return cardsData.map(card => 
+      <Card key={card.id} card={card} />
+    )
+  }
 
   return (
     <>
@@ -25,15 +32,7 @@ export const Task = () => {
           {isPhone 
             ? (
               <div className="list phone">
-                <div className="card">
-                  <div className="close">x</div>
-                  <h3>Tarea 1</h3>
-                  <h6>15/07/2022 16.40hs</h6>
-                  <h5>Lisandro Mansilla</h5>
-                  <button type="button">Nueva</button>
-                  <button type="button">Baja</button>
-                  <p>Descripción Fake...</p>
-                </div>
+               {renderAllCards()}
               </div>
               )
             : (
