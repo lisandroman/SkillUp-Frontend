@@ -1,6 +1,7 @@
 import React from 'react'
 import './TaskForm.styles.css'
 import  { useFormik } from 'formik'
+import * as Yup from 'yup'
 
 export const TaskForm = () => {
 
@@ -15,12 +16,24 @@ export const TaskForm = () => {
     alert()
   }
 
-  const formik = useFormik({
-    initialValues,
-    onSubmit
+  const required = ('* Required field...')
+
+  const validationSchema = () => 
+    Yup.object().shape({
+      title: Yup.string()
+        .min(6, "Please enter a title with more than 6 character")
+        .required(required),
+      status: Yup.string().required(required),
+      priority: Yup.string().required(required)
   })
 
-  const {handleSubmit, handleChange} = formik
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit,
+  })
+
+  const {handleSubmit, handleChange, errors} = formik
 
   return (
     <section className="taskForm">
@@ -29,8 +42,9 @@ export const TaskForm = () => {
       <form onSubmit={ handleSubmit }>
         <div>
           <div>
-            <input name="title" type="text" placeholder='Title...'/>
+            <input name="title" placeholder='Title...'onChange={handleChange}/>
           </div>
+          {errors.title && <span>{errors.title}</span>}
 
           <div>
             <select name="status" onChange={ handleChange }>
@@ -40,14 +54,16 @@ export const TaskForm = () => {
               <option value="Finished">Finished</option>
             </select>
           </div>
+          {errors.status && <span>{errors.status}</span>}
           <div>
-            <select name="Priority" onChange={ handleChange }>
+            <select name="priority" onChange={ handleChange }>
               <option value="">Select Priority</option>
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
               <option value="High">High</option>
             </select>
           </div>
+          {errors.priority && <span>{errors.priority}</span>}
 
         </div>
         <div>
