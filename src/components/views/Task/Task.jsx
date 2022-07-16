@@ -4,10 +4,11 @@ import { useResize } from '../../../hooks/useResize'
 import { Header } from '../../Header/Header'
 import { cardsData } from './data'
 import { Card } from '../../Card/Card'
+import { TaskForm } from '../../TaskForm/TaskForm'
 
 export const Task = () => {
 
-  const { isPhone } = useResize()
+  const { isPhone } = useResize();
 
   const limitString = (str) => {
     if(str.length > 370)
@@ -25,9 +26,10 @@ export const Task = () => {
     <>
       <Header />
       <main id="tasks">
+        <TaskForm />
         <section className='wrapperList'>
           <div className="listHeader">
-            <h2>Mis Tareas</h2>
+            <h2>My Tasks</h2>
           </div>
           {isPhone 
             ? (

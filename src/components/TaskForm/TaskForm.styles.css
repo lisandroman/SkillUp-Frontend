@@ -1,0 +1,76 @@
+
+.taskForm {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.taskForm h2 {
+  margin: 0;
+}
+
+.taskForm > form {
+  width: 100%;
+  padding-right: 15px;
+  box-sizing: border-box;
+}
+
+.taskForm > form > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 0.6rem;
+}
+
+.taskForm > form > div > div {
+  flex: 1;
+}
+
+.taskForm input,
+.taskForm select,
+.taskForm textarea {
+  border: 0.5px solid #e9e9e9;
+  color: #000;
+  flex: 1 1;
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-bottom: 0.2rem;
+  outline: 0;
+  padding: 0.75rem 0.75rem;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.taskForm textarea {
+  min-height: 140px;
+}
+
+.taskForm button {
+  transition: all 0.3s ease-out;
+  border-radius: 10px;
+  background-color: var(--global-primary-color);
+  border: 0;
+  color: #fff;
+  padding: 10px !important;
+  font-size: 1rem;
+  cursor: pointer;
+  justify-content: center;
+  margin: 10px 0 30px 0px;
+}
+
+.taskForm button:hover {
+  color: var(--global-primary-color);
+  border-radius: var(--global-border-radius);
+  border: 1px solid var(--global-border);
+  background-color: #fff;
+  padding: 10px !important;
+}
+
+@media (min-width: 1300px) {
+  .taskForm > form > div {
+    flex-direction: row;
+  }
+}
