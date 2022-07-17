@@ -44,8 +44,15 @@
   box-sizing: border-box;
 }
 
-.taskForm textarea {
-  min-height: 140px;
+.taskForm input.error,
+.taskForm select.error,
+.taskForm textarea.error {
+  border: 1px solid red;
+}
+
+.errorMsg {
+  color: red;
+  font-size: .7rem;
 }
 
 .taskForm button {

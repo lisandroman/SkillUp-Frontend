@@ -33,7 +33,7 @@ export const TaskForm = () => {
     onSubmit,
   })
 
-  const {handleSubmit, handleChange, errors} = formik
+  const {handleSubmit, handleChange, errors, touched, handleBlur} = formik
 
   return (
     <section className="taskForm">
@@ -42,28 +42,34 @@ export const TaskForm = () => {
       <form onSubmit={ handleSubmit }>
         <div>
           <div>
-            <input name="title" placeholder='Title...'onChange={handleChange}/>
+            <input 
+              name="title"
+              onChange={handleChange}
+              onBlur={ handleBlur }
+              placeholder='Title...'
+              className={ errors.title ? "error" : "" }
+            />
+          {errors.title && touched.title && <span className='errorMsg'>{errors.title}</span>}
           </div>
-          {errors.title && <span>{errors.title}</span>}
 
           <div>
-            <select name="status" onChange={ handleChange }>
+            <select name="status" onChange={ handleChange } onBlur={ handleBlur } className={ errors.status ? "error" : "" }>
               <option value="">Select Status</option>
               <option value="New">New</option>
               <option value="InProcess">In Process</option>
               <option value="Finished">Finished</option>
             </select>
+          {errors.status && touched.status && <span className='errorMsg'>{errors.status}</span>}
           </div>
-          {errors.status && <span>{errors.status}</span>}
           <div>
-            <select name="priority" onChange={ handleChange }>
+            <select name="priority" onChange={ handleChange } onBlur={ handleBlur } className={ errors.priority ? "error" : "" }>
               <option value="">Select Priority</option>
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
               <option value="High">High</option>
             </select>
+          {errors.priority && touched.priority && <span className='errorMsg'>{errors.priority}</span>}
           </div>
-          {errors.priority && <span>{errors.priority}</span>}
 
         </div>
         <div>
