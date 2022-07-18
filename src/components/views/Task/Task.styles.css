@@ -1,16 +1,16 @@
 #tasks {
-  padding: 20px 15px 5px;
   display: flex;
+  padding: 20px 15px 5px;
   flex-direction: column;
 }
 
 #tasks .wrapperList {
   background-color: #fafafa;
   border-radius: var(--global-border-radius);
-  height: calc(100vh - 100px);
-  padding: 10px;
   box-shadow: 0 2px 5px #dbdbdb;
   flex: 2;
+  height: calc(100vh - 100px);
+  padding: 10px;
 }
 
 #tasks .wrapperList h2{
@@ -25,11 +25,11 @@
 }
 
 #tasks .wrapperList .groupList .list {
-  flex: 1;
-  border-radius: var(--global-border-radius);
-  padding: 10px;
-  box-shadow: 0 2px 5px #dbdbdb;
   background-color: #fff;
+  border-radius: var(--global-border-radius);
+  box-shadow: 0 2px 5px #dbdbdb;
+  flex: 1;
+  padding: 10px;
 }
 
 #tasks .wrapperList .groupList .list h4{
@@ -48,10 +48,10 @@
 }
 #tasks .card .close {
   cursor: pointer;
+  font-size: 18px;
   position: absolute;
   right: 12px;
   top: 10px;
-  font-size: 18px;
 }
 
 #tasks .card h3 {
@@ -68,23 +68,23 @@
 }
 
 #tasks .card button {
+  background-color: var(--global-primary-color);
+  border-color: var(--global-primary-color);
   border-radius: 4px;
   border-width: 1px;
+  color: #fff;
   font-size: 0.6rem;
   font-weight: 700;
   margin: 0.35rem 0.2rem 0.15rem 0;
   padding: 0.075rem 0.3rem;
-  background-color: var(--global-primary-color);
-  border-color: var(--global-primary-color);
-  color: #fff;
 }
 
 #tasks .card p {
   color: #424242;
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   margin: 0;
-  margin-top: 0.8rem;
+  margin-top: 0.75rem;
 }
 
 @media (min-width: 900px) {
