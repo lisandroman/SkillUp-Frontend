@@ -1,10 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import  { useFormik } from 'formik'
-import '../Auth.styles.css'
 import { Link } from 'react-router-dom'
 import * as Yup from 'yup'
+import '../Auth.styles.css'
 
 export const Register = () => {
+
+  const [data, setData] = useState()
+
+  useEffect(() => {
+    fetch("http://localhost:8080/auth/data")
+      .then(response => response.json())
+      .then(data => setData(data.result))
+  },[])
+
+  console.log({data})
+
   const initialValues = {
     userName: '',
     password: '',
@@ -22,7 +33,7 @@ export const Register = () => {
     userName: Yup.string().min(4, 'Please enter at least 4 characters').required(required),
     password: Yup.string().required(required),
     email: Yup.string().email('Must to be a valid email address').required(required),
-    teamID: Yup.string().required(required),
+    // teamID: Yup.string().required(required),
     role: Yup.string().required(required),
     continent: Yup.string().required(required),
     region: Yup.string().required(required),
@@ -83,8 +94,9 @@ export const Register = () => {
             onBlur={ handleBlur } 
             className={ errors.role && touched.role ? "error" : "" }>
             <option value="">Select your Role</option>
-            <option value="Team Leader">Team Leader</option>
-            <option value="Team Member">Team Member</option>
+             {data?.Role?.map(option => (
+              <option value={option} key={option}>{option}</option>
+             ))} 
           </select>     
           {errors.role && touched.role && (
             <span className="errorMsg">{errors.role}</span>
@@ -97,29 +109,30 @@ export const Register = () => {
               onBlur={ handleBlur } 
               className={ errors.continent && touched.continent ? "error" : "" }>
             <option value="">Select Continent</option>
-            <option value="America">América</option>
-            <option value="Europa">Europa</option>
-            <option value="Otro">Otro</option>
+            {data?.continente?.map(option => (
+              <option value={option} key={option}>{option}</option>
+             ))} 
           </select>     
           {errors.continent && touched.continent && (
             <span className="errorMsg">{errors.continent}</span>
           )}
         </div>
-        <div>
-          <label>Región</label>
-          <select name="region" value={values.region} 
-            onChange={handleChange} 
-            className={ errors.region && touched.region ? "error" : "" }>
-            <option value="">Select Region</option>
-            <option value="Latam">Latam</option>
-            <option value="Brasil">Brasil</option>
-            <option value="America del Norte">América del Norte</option>
-            <option value="Otro">Otro</option>
-          </select>     
-            {errors.region && touched.region && (
-            <span className="errorMsg">{errors.region}</span>
+          {values.continent === "America" && (
+            <div>
+              <label>Región</label>
+              <select name="region" value={values.region} 
+                onChange={handleChange} 
+                className={ errors.region && touched.region ? "error" : "" }>
+                <option value="">Select Region</option>
+                {data?.region?.map(option => (
+                  <option value={option} key={option}>{option}</option>
+                  ))} 
+              </select>     
+                {errors.region && touched.region && (
+                  <span className="errorMsg">{errors.region}</span>
+              )}
+            </div>
           )}
-        </div>
        
         <div> 
           <button type="submit">Enviar</button>
