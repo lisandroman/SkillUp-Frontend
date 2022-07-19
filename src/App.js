@@ -1,11 +1,11 @@
 import './App.css';
 import { lazy, Suspense } from 'react';
-
-import { Login } from './components/views/Login/Login';
 import { Task } from './components/views/Task/Task';
 
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion';
+import { Register } from './components/views/auth/Register/Register';
+import { Login } from './components/views/auth/Login/Login';
 
 const Error404 = lazy(() => import('./components/views/Error404/Error404'))
 
@@ -15,7 +15,6 @@ const RequireAuth = ({ children }) => {
   } 
     return children
 }
-
 const pageTransition = {
   in: {opacity: 1},
   out: {opacity: 0},
@@ -37,6 +36,8 @@ function App() {
               </motion.div>
             </RequireAuth>
           } />
+          
+        <Route path="/register" element={<motion.div className='page' initial="out" animate="in" exit="out" variants={pageTransition}><Register /></motion.div>} />
         <Route path="/login" element={<motion.div className='page' initial="out" animate="in" exit="out" variants={pageTransition}><Login /></motion.div>} />
         <Route path="*" element={ <motion.div className='page' initial="out" animate="in" exit="out" variants={pageTransition}>
           <Suspense fallback={<>Loading...</>}>

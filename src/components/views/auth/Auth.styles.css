@@ -27,12 +27,19 @@
 .auth > form > div > *:not(label) {
   padding: 8px 0;
 }
+.auth > form > div > a {
+  text-decoration: none;
+  color: #424242;
+  text-transform: uppercase;
+  font-weight: 700;
+}
 
 .auth > form > div > div {
   color: var(--global-primary-color);
   font-size: 15px;
 }
-.auth input {
+.auth input,
+.auth select {
   border-radius: var(--global-radius);
   border: var(--global-border)
 }
