@@ -47,11 +47,11 @@
 .taskForm input.error,
 .taskForm select.error,
 .taskForm textarea.error {
-  border: 1px solid red;
+  border: 1px solid #D81B60;
 }
 
 .errorMsg {
-  color: red;
+  color: #D81B60;
   font-size: .65rem;
 }
 
