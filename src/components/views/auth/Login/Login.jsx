@@ -5,8 +5,8 @@ import * as Yup from 'yup'
 
 import "../Auth.styles.css"
 
+const { REACT_APP_API_ENDPOINT } = process.env
 export const Login = () => {
-  const { REACT_APP_API_ENDPOINT: API_ENDPOINT } = process.env
   
   const navigate = useNavigate()
   const initialValues = {
@@ -17,7 +17,7 @@ export const Login = () => {
   const onSubmit = () => {
     const { userName, password } = values
 
-    fetch(`${API_ENDPOINT}/auth/login`, {
+    fetch(`https://goscrum-api.alkemy.org/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
