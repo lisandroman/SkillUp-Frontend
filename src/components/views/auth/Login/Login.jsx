@@ -1,24 +1,16 @@
 import React, { useState } from 'react'
 import  { useFormik } from 'formik'
 import {Link, useNavigate} from 'react-router-dom'
+import * as Yup from 'yup'
+
 import "../Auth.styles.css"
 
 export const Login = () => {
+
   const navigate = useNavigate()
   const initialValues = {
-    email: '',
+    userName: '',
     password: ''
-  }
-
-  const validate = (values) => {
-    const errors = {};
-    if(!values.email) {
-      errors.email = "Email es requerido"
-    }
-    if(!values.password) {
-      errors.password = "Contraseña es requerida"
-    }
-    return errors;
   }
 
   const onSubmit = () => {
@@ -26,26 +18,49 @@ export const Login = () => {
     navigate("/", {replace:true})
   }
 
-  const formik = useFormik({
-    initialValues,
-    validate,
-    onSubmit
+  const required = ('* Required field...')
+
+  const validationSchema = () => 
+  Yup.object().shape({
+    userName: Yup.string().min(4, 'Please enter at least 4 characters').required(required),
+    password: Yup.string().required(required),
   })
 
-  const {handleSubmit, handleChange, values, errors} = formik
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+    validationSchema
+  })
+
+  const {handleSubmit, handleChange, values, errors, touched, handleBlur} = formik
+  
   return (
     <div className='auth'>
       <form onSubmit={handleSubmit}>
         <h1>Iniciar Sesión</h1>
         <div>
           <label>Email</label>
-          <input name="email" type="email" value={values.email} onChange={handleChange}/>
-          {formik.errors.email && <div>{formik.errors.email}</div>}
+          <input 
+            type="text" 
+            name="userName" 
+            value={values.userName}  
+            onChange={handleChange}
+            onBlur={ handleBlur } 
+            className={ errors.userName && touched.userName ? "error" : "" }
+          />
+          {errors.userName && touched.userName && <div>{errors.userName}</div>}
         </div>
         <div>
           <label>Password</label>
-          <input name="password" type="password" value={values.password} onChange={handleChange}/>
-          {errors.password && <div>{errors.password}</div>}
+          <input 
+            name="password" 
+            type="password" 
+            value={values.password} 
+            onChange={handleChange}
+            onBlur={ handleBlur } 
+            className={ errors.password && touched.password ? "error" : "" }
+          />
+          {errors.password && touched.password && <div>{errors.password}</div>}
         </div>
         <div>
           <button type="submit">Enviar</button>
