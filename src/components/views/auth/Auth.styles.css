@@ -46,7 +46,9 @@
   border-radius: var(--global-radius);
   border: var(--global-border)
 }
-
+.auth select {
+  color: grey;
+}
 .auth button {
   transition: all 0.3 ease-out;
   background-color: var(--global-primary-color);
@@ -70,13 +72,13 @@
 .auth input.error,
 .auth select.error,
 .auth textarea.error {
-  border: 1px solid red;
+  border: 1px solid #D81B60;
 }
 
 @media screen and (min-width: 600px) {
 
   .auth{
-    background-color: var(--global-bg-color-soft);
+    background-color: #1B2430;
   }
 
   .auth > form {
