@@ -14,7 +14,7 @@ export const Register = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`${REACT_APP_API_ENDPOINT}auth/data`)
+    fetch(`https://goscrum-api.alkemy.org/auth/data`)
       .then(response => response.json())
       .then(data => setData(data.result))
   },[])
@@ -59,13 +59,14 @@ export const Register = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "user" : {
-          "userName": values.userName,
-          "password": values.password,
-          "email": values.email,
+        user : {
+          userName: values.userName,
+          password: values.password,
+          email: values.email,
           teamID,
-          "role": values.role,
-          "region" : values.region,
+          role: values.role,
+          continent: values.continent,
+          region : values.region,
         },
       }),
     })
@@ -81,7 +82,7 @@ export const Register = () => {
     validationSchema
   })
 
-  const {handleSubmit, handleChange, values, errors, touched, handleBlur} = formik
+  const {handleSubmit, handleChange, values, errors, touched, handleBlur, setFieldValue} = formik
   return (
     <div className='auth'>
       <form onSubmit={handleSubmit}>
@@ -139,13 +140,13 @@ export const Register = () => {
         )}
 
         <div>
-          <label>Rol</label>
+          <label>Role</label>
           <select name="role" value={values.role} 
             onChange={handleChange} 
             onBlur={ handleBlur } 
             className={ errors.role && touched.role ? "error" : "" }>
             <option value="">Select your Role</option>
-             {data?.Role?.map(option => (
+             {data?.Rol?.map(option => (
               <option value={option} key={option}>{option}</option>
              ))} 
           </select>     
