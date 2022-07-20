@@ -6,7 +6,8 @@ import * as Yup from 'yup'
 import "../Auth.styles.css"
 
 export const Login = () => {
-
+  const { REACT_APP_API_ENDPOINT: API_ENDPOINT } = process.env
+  
   const navigate = useNavigate()
   const initialValues = {
     userName: '',
@@ -14,8 +15,22 @@ export const Login = () => {
   }
 
   const onSubmit = () => {
-    localStorage.setItem("logged", "yes")
-    navigate("/", {replace:true})
+    const { userName, password } = values
+
+    fetch(`${API_ENDPOINT}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userName, password
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      navigate("/", { replace: true })
+      localStorage.setItem("logged", data?.result?.token)
+    })
   }
 
   const required = ('* Required field...')
