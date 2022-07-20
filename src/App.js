@@ -6,6 +6,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion';
 import { Register } from './components/views/auth/Register/Register';
 import { Login } from './components/views/auth/Login/Login';
+import { Registered } from './components/views/Registered/Registered';
 
 const Error404 = lazy(() => import('./components/views/Error404/Error404'))
 
@@ -37,6 +38,7 @@ function App() {
             </RequireAuth>
           } />
           
+        <Route path="/registered/:teamID" element={<motion.div className='page' initial="out" animate="in" exit="out" variants={pageTransition}><Registered /></motion.div>} />
         <Route path="/register" element={<motion.div className='page' initial="out" animate="in" exit="out" variants={pageTransition}><Register /></motion.div>} />
         <Route path="/login" element={<motion.div className='page' initial="out" animate="in" exit="out" variants={pageTransition}><Login /></motion.div>} />
         <Route path="*" element={ <motion.div className='page' initial="out" animate="in" exit="out" variants={pageTransition}>

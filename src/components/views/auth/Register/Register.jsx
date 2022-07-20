@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import  { useFormik } from 'formik'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
+import {v4 as uuidv4} from 'uuid'
+
+import { FormControlLabel, Switch } from '@mui/material'
 import '../Auth.styles.css'
 
+const { REACT_APP_API_ENDPOINT } = process.env
 export const Register = () => {
 
   const [data, setData] = useState()
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8080/auth/data")
+    fetch(`${REACT_APP_API_ENDPOINT}auth/data`)
       .then(response => response.json())
       .then(data => setData(data.result))
   },[])
@@ -24,6 +29,7 @@ export const Register = () => {
     role: '',
     continent: '',
     region: '',
+    switch: false,
   }
 
   const required = ('* Required field...')
@@ -39,9 +45,34 @@ export const Register = () => {
     region: Yup.string().required(required),
   })
 
+  const handleChangeContinent = (value) => {
+    setFieldValue('continent', value)
+    if(value !== 'America') setFieldValue('region', 'Otro')
+  }
+
   const onSubmit = () => {
-    // localStorage.setItem("logged", "yes")
-    alert()
+    const teamID = !values.teamID ? uuidv4() : values.teamID
+
+    fetch('https://goscrum-api.alkemy.org/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "user" : {
+          "userName": values.userName,
+          "password": values.password,
+          "email": values.email,
+          teamID,
+          "role": values.role,
+          "region" : values.region,
+        },
+      }),
+    })
+    .then(response => response.json())
+    .then(data => navigate("/registered/" + data?.result?.user?.teamID, {
+      replace: true,
+    }))
   }
 
   const formik = useFormik({
@@ -85,7 +116,27 @@ export const Register = () => {
             <span className="errorMsg">{errors.password}</span>
           )}
         </div>
-        <input type="hidden" name="teamID" value="9cdbd108-f924-4383-947d-8f06510dad" />
+        <FormControlLabel
+          control={
+            <Switch
+              value={values.switch}
+              onChange={()=> formik.setFieldValue("switch",!formik.values.switch)}
+              name="switch"
+              color="secondary"
+            />
+          }
+          label="Perteneces a un equipo ya creado"
+        />
+        {values.switch && (
+          <div>
+            <label>Enter your Team ID</label>
+            <input 
+              type="text" 
+              name="teamID" 
+              value={values.teamID}
+              onChange={handleChange}/>
+          </div>
+        )}
 
         <div>
           <label>Rol</label>
@@ -105,7 +156,7 @@ export const Register = () => {
         <div>
           <label>Continente</label>
           <select name="continent" value={values.continent}
-              onChange={handleChange}
+              onChange={event => handleChangeContinent(event.currentTarget.value)}
               onBlur={ handleBlur } 
               className={ errors.continent && touched.continent ? "error" : "" }>
             <option value="">Select Continent</option>
