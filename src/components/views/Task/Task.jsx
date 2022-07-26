@@ -11,13 +11,13 @@ export const Task = () => {
   const { isPhone } = useResize();
 
   const limitString = (str) => {
-    if(str.length > 370)
-      return {string: str.slice(0, 250).concat("..."), addButton: true}
-    return {string: str, addButton: false}
-  } 
+    if (str.length > 370)
+      return { string: str.slice(0, 250).concat("..."), addButton: true }
+    return { string: str, addButton: false }
+  }
 
   const renderAllCards = () => {
-    return cardsData.map(card => 
+    return cardsData.map(card =>
       <Card key={card.id} card={card} />
     )
   }
@@ -31,12 +31,12 @@ export const Task = () => {
           <div className="listHeader">
             <h2>My Tasks</h2>
           </div>
-          {isPhone 
+          {isPhone
             ? (
               <div className="list phone">
-               {renderAllCards()}
+                {renderAllCards()}
               </div>
-              )
+            )
             : (
               <div className="groupList">
                 <div className="list">
@@ -95,7 +95,7 @@ export const Task = () => {
                   </div>
                 </div>
               </div>
-              )
+            )
           }
         </section>
       </main>
