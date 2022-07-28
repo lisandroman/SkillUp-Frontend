@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import { toast, ToastContainer } from 'react-toastify'
 
 import './TaskForm.styles.css'
-import 'react-toastify/dist/react-toastify.css'
+import 'react-toastify/dist/ReactToastify.css'
 
 const { REACT_APP_API_ENDPOINT: API_ENDPOINT } = process.env
 
@@ -18,17 +18,17 @@ export const TaskForm = () => {
   }
 
   const onSubmit = () => {
-    fetch(`${API_ENDPOINT}task`, {
+    fetch(`https://goscrum-api.alkemy.org/task`, {
       method: 'POST',
       headers: { 'Content-Type':'application/json',
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
-    body: JSON.stringify({task: value}),
+    body: JSON.stringify({task: values}),
     })
     .then(response => response.json())
     .then(data => {
       resetForm()
-      alert("Task created successfully!")
+      toast("Task created successfully!")
     })
   }
 
@@ -49,7 +49,7 @@ export const TaskForm = () => {
     onSubmit,
   })
 
-  const { handleSubmit, handleChange, errors, touched, handleBlur } = formik
+  const { handleSubmit, handleChange, errors, touched, handleBlur, values, resetForm } = formik
 
   return (
     <section className="taskForm">
@@ -105,6 +105,7 @@ export const TaskForm = () => {
         </div>
         <button type="submit">Create!</button>
       </form>
+      <ToastContainer />
     </section>
   )
 }
