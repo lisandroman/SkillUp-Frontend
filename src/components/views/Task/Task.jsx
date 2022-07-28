@@ -36,7 +36,7 @@ export const Task = () => {
               <div className="list phone">
                 {renderAllCards()}
               </div>
-            )
+              )
             : (
               <div className="groupList">
                 <div className="list">

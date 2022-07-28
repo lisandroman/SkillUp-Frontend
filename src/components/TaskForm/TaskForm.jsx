@@ -1,7 +1,12 @@
 import React from 'react'
-import './TaskForm.styles.css'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { toast, ToastContainer } from 'react-toastify'
+
+import './TaskForm.styles.css'
+import 'react-toastify/dist/react-toastify.css'
+
+const { REACT_APP_API_ENDPOINT: API_ENDPOINT } = process.env
 
 export const TaskForm = () => {
 
@@ -13,7 +18,18 @@ export const TaskForm = () => {
   }
 
   const onSubmit = () => {
-    alert()
+    fetch(`${API_ENDPOINT}task`, {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json',
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+    body: JSON.stringify({task: value}),
+    })
+    .then(response => response.json())
+    .then(data => {
+      resetForm()
+      alert("Task created successfully!")
+    })
   }
 
   const required = ('* Required field...')
