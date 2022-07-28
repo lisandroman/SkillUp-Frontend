@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 
 import "../Auth.styles.css"
+import Swal from 'sweetalert2'
 
 const { REACT_APP_API_ENDPOINT } = process.env
 export const Login = () => {
@@ -28,8 +29,19 @@ export const Login = () => {
     })
       .then(response => response.json())
       .then(data => {
-        localStorage.setItem("logged", data?.result?.token)
-        navigate("/", { replace: true })
+        if(data.status_code === 200) {
+          localStorage.setItem("logged", data?.result?.token)
+          navigate("/", { replace: true })
+        } else {
+          Swal.fire({
+            title: "Credentials Error",
+            text: "Enter valid credentials",
+            confirmButtonText: "Accept",
+            width: "400px",
+            timer: 10000,
+            timerProgressBar: true,
+          })
+        }
       })
   }
 
