@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react'
 
 import { useResize } from '../../../hooks/useResize'
 import { Header } from '../../Header/Header'
-import { cardsData } from './data'
 import { Card } from '../../Card/Card'
 import { TaskForm } from '../../TaskForm/TaskForm'
+
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import './Task.styles.css'
 
@@ -15,9 +17,10 @@ export const Task = () => {
 
   const { isPhone } = useResize();
   const [list, setList] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-
+    setLoading(true)
     fetch(`${REACT_APP_API_ENDPOINT}task`, {
       headers: { 'Content-Type':'application/json',
       Authorization: "Bearer " + localStorage.getItem("token"),
@@ -26,6 +29,7 @@ export const Task = () => {
     .then(response => response.json())
     .then(data => {
       setList(data.result)
+      setLoading(false)
     })
   }, [])
   
@@ -38,27 +42,27 @@ export const Task = () => {
 
   const renderAllCards = () => {
     return list?.map(card =>
-      <Card key={card.id} card={card} />
+      <Card key={card._id} card={card} />
     )
   }
   const renderNewCards = () => {
     return list?.filter((data) => data.status === "NEW") 
     .map(card =>
-      <Card key={card.id} card={card} />
+      <Card key={card._id} card={card} />
     )
   }
 
   const renderInProgressCards = () => {
     return list?.filter((data) => data.status === "IN PROGRESS") 
     .map(card =>
-      <Card key={card.id} card={card} />
+      <Card key={card._id} card={card} />
     )
   }
 
   const renderFinishedCards = () => {
     return list?.filter((data) => data.status === "FINISHED") 
     .map(card =>
-      <Card key={card.id} card={card} />
+      <Card key={card._id} card={card} />
     )
   }
 
@@ -74,12 +78,12 @@ export const Task = () => {
           {isPhone
             ? !list?.length 
               ? ( <div>No task...</div> )
-              : ( <div className="list phone"> {renderAllCards()} </div> )
+              : loading ? <Skeleton /> : ( <div className="list phone"> {renderAllCards()} </div> )
             : (
               <div className="groupList">
                 {!list?.length
                   ? ( <div>No task...</div> )
-                  : (
+                  : loading ? <Skeleton /> : (
                     <>
                       <div className="list">
                         <h4>Nuevas</h4>
