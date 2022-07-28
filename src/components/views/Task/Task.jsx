@@ -72,26 +72,31 @@ export const Task = () => {
             <h2>My Tasks</h2>
           </div>
           {isPhone
-            ? (
-              <div className="list phone">
-                {renderAllCards()}
-              </div>
-              )
+            ? !list?.length 
+              ? ( <div>No task...</div> )
+              : ( <div className="list phone"> {renderAllCards()} </div> )
             : (
               <div className="groupList">
-                <div className="list">
-                  <h4>Nuevas</h4>
-                  {renderNewCards()}
-                </div>
+                {!list?.length
+                  ? ( <div>No task...</div> )
+                  : (
+                    <>
+                      <div className="list">
+                        <h4>Nuevas</h4>
+                        {renderNewCards()}
+                      </div>
 
-                <div className="list">
-                  <h4>En proceso</h4>
-                  {renderInProgressCards()}
-                </div>
-                <div className="list">
-                  <h4>Finalizadas</h4>
-                  {renderFinishedCards()}
-                </div>
+                      <div className="list">
+                        <h4>En proceso</h4>
+                        {renderInProgressCards()}
+                      </div>
+                      <div className="list">
+                        <h4>Finalizadas</h4>
+                        {renderFinishedCards()}
+                      </div>
+                    </>
+                    )
+                }
               </div>
             )
           }
