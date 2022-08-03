@@ -8,6 +8,7 @@ import "../Auth.styles.css"
 import { Alert } from '../../../../utils/Alert'
 
 const { REACT_APP_API_ENDPOINT } = process.env
+
 export const Login = () => {
 
   const navigate = useNavigate()
@@ -19,7 +20,7 @@ export const Login = () => {
   const onSubmit = () => {
     const { userName, password } = values
 
-    fetch(`https://goscrum-api.alkemy.org/auth/login`, {
+    fetch(`${REACT_APP_API_ENDPOINT}auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -32,6 +33,7 @@ export const Login = () => {
       .then(data => {
         if(data.status_code === 200) {
           localStorage.setItem("logged", data?.result?.token)
+          localStorage.setItem("userName", data?.result?.user.userName)
           navigate("/", { replace: true })
         } else {
           Alert()

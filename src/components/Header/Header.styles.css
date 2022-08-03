@@ -12,3 +12,13 @@ header > img {
 header > div {
   cursor: pointer;
 }
+
+.wrapperRightHeader{
+  display: flex;
+  flex-direction: row;
+  font-weight: bold;
+}
+
+.wrapperRightHeader div:first-child{
+  padding-right: 10px;
+}

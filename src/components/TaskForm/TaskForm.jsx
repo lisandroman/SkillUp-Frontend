@@ -18,7 +18,8 @@ export const TaskForm = () => {
   }
 
   const onSubmit = () => {
-    fetch(`https://goscrum-api.alkemy.org/task`, {
+    // fetch(`${API_ENDPOINT}task`, {
+    fetch('https://goscrum-api.alkemy.org/task', {
       method: 'POST',
       headers: { 'Content-Type':'application/json',
       Authorization: "Bearer " + localStorage.getItem("token"),
@@ -29,6 +30,7 @@ export const TaskForm = () => {
     .then(data => {
       resetForm()
       toast("Task created successfully!")
+
     })
   }
 
@@ -59,21 +61,21 @@ export const TaskForm = () => {
         <div>
           <div>
             <input
+              className={ errors .title ? "error" : ""}
               name="title"
-              onChange={handleChange}
-              onBlur={handleBlur}
+              onChange={ handleChange }
+              onBlur={ handleBlur }
               placeholder='Title...'
-              className={errors.title ? "error" : ""}
             />
-            {errors.title && touched.title && <span className='errorMsg'>{errors.title}</span>}
+            { errors.title && touched.title && <span className='errorMsg'>{errors.title}</span> }
           </div>
 
           <div>
             <select 
               name="status" 
-              onChange={handleChange} 
-              onBlur={handleBlur} 
-              className={errors.status ? "error" : ""}>
+              onChange={ handleChange } 
+              onBlur={ handleBlur } 
+              className={ errors.status ? "error" : "" }>
               <option value="">Select Status</option>
               <option value="New">New</option>
               <option value="InProcess">In Process</option>
@@ -84,9 +86,9 @@ export const TaskForm = () => {
           <div>
             <select 
               name="importance" 
-              onChange={handleChange} 
-              onBlur={handleBlur} 
-              className={errors.importance ? "error" : ""}>
+              onChange={ handleChange } 
+              onBlur={ handleBlur } 
+              className={ errors.importance ? "error" : "" }>
               <option value="">Select importance</option>
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
@@ -99,7 +101,7 @@ export const TaskForm = () => {
         <div>
           <textarea 
             name="description" 
-            onChange={handleChange} 
+            onChange={ handleChange } 
             placeholder="Description..."
           />
         </div>
