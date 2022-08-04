@@ -61,22 +61,8 @@ export const Task = () => {
     return renderList?.map(data => <Card key={data._id} data={data} />)
   }
 
-  const renderNewCards = () => {
-    return renderList?.filter((data) => data.status === "NEW") 
-    .map(data =>
-      <Card key={data._id} data={data} />
-    )
-  }
-
-  const renderInProgressCards = () => {
-    return renderList?.filter((data) => data.status === "IN PROGRESS") 
-    .map(data =>
-      <Card key={data._id} data={data} />
-    )
-  }
-
-  const renderFinishedCards = () => {
-    return renderList?.filter((data) => data.status === "FINISHED") 
+  const renderColumnCards = (text) => {
+    return renderList?.filter((data) => data.status === text) 
     .map(data =>
       <Card key={data._id} data={data} />
     )
@@ -154,17 +140,17 @@ export const Task = () => {
                   : loading ? <Skeleton /> : (
                     <>
                       <div className="list">
-                        <h4>Nuevas</h4>
-                        {renderNewCards()}
+                        <h4>News</h4>
+                        {renderColumnCards("NEW")}
                       </div>
 
                       <div className="list">
-                        <h4>En proceso</h4>
-                        {renderInProgressCards()}
+                        <h4>In Progress</h4>
+                        {renderColumnCards("IN PROGRESS")}
                       </div>
                       <div className="list">
-                        <h4>Finalizadas</h4>
-                        {renderFinishedCards()}
+                        <h4>Finished</h4>
+                        {renderColumnCards("FINISHED")}
                       </div>
                     </>
                     )
