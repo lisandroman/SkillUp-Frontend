@@ -23,11 +23,12 @@ export const Task = () => {
   const [list, setList] = useState(null);
   const [renderList, setRenderList] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [tasksFrom, setTasksFrom] = useState("ALL");
   const { isPhone } = useResize();
 
   useEffect(() => {
     setLoading(true);
-    fetch(`https://goscrum-api.alkemy.org/task`, {
+    fetch(`https://goscrum-api.alkemy.org/task${tasksFrom === 'ME' ? "/me" : ""}`, {
       headers: { 
         'Content-Type': 'application/json',
         Authorization: "Bearer " + localStorage.getItem('token'),
@@ -40,7 +41,7 @@ export const Task = () => {
         setLoading(false)
       }, 3000)
     } )
-  },[])
+  },[tasksFrom])
   
   const limitString = (str) => {
     if (str.length > 370)
@@ -93,7 +94,7 @@ export const Task = () => {
               <RadioGroup
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
-                onChange={ ()=>{} }  
+                onChange={ (event)=>{setTasksFrom(event.currentTarget.value)} }  
               >
                 <FormControlLabel
                   value="ALL"
@@ -158,3 +159,4 @@ export const Task = () => {
     </>
   )
 }
+
