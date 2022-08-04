@@ -12,6 +12,7 @@ import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import FormControl from "@mui/material/FormControl"
+import debounce from "lodash.debounce"
 
 import './Task.styles.css'
 
@@ -24,6 +25,7 @@ export const Task = () => {
   const [renderList, setRenderList] = useState(null);
   const [loading, setLoading] = useState(false);
   const [tasksFrom, setTasksFrom] = useState("ALL");
+  const [search, setSearch] = useState("");
   const { isPhone } = useResize();
 
   useEffect(() => {
@@ -42,6 +44,12 @@ export const Task = () => {
       }, 3000)
     } )
   },[tasksFrom])
+
+  useEffect(() => {
+   if(search) 
+    setRenderList(list.filter(data=>data.title.startsWith(search)))
+    else setRenderList(list)
+  },[search])
   
   const limitString = (str) => {
     if (str.length > 370)
@@ -79,6 +87,9 @@ export const Task = () => {
     else
     setRenderList(list.filter((data) => data.importance === event.currentTarget.value))
   }
+  const handleSearch = debounce((event) => {
+    setSearch(event?.target?.value)
+  }, 1000)
 
   return (
     <>
@@ -108,6 +119,13 @@ export const Task = () => {
                 />
               </RadioGroup>
             </FormControl>
+            <div className="search">
+              <input 
+                type="text" 
+                placeholder='Search by title...'
+                onChange={handleSearch}
+              />
+            </div>
             <select name="importance" onChange={handleChangeImportance} >
               <option value="">Select a priority</option>
               <option value="ALL">ALL</option>
